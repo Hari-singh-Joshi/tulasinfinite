@@ -1,0 +1,200 @@
+
+    
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+<br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .section-title {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+ <button onclick="downloadPDF()">Download as PDF</button>
+<div class="container" id="download">
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('download'); 
+            html2pdf()
+                .from(element)
+                .save('Medical Report.pdf');
+        }
+    </script>
+    <div class="container mt-4">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-3 text-primary">Patient</h2>
+            
+            <div class="text">
+                <p class="fw-bold text-dark fs-4">
+                    {% if user.get_full_name %}
+                       Name:  {{ user.get_full_name }}
+                    {% else %}
+                       Name: {{ user.username }}
+                    {% endif %}
+                </p>
+                <p class="fw-bold text-dark fs-4">
+                    Age: {{ answers.age|default:"Not Provided" }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="text-center">{{ disease.name }} - Medical Report</h2>
+    <button class="btn btn-primary" onclick="downloadPDF()">Download as PDF</button>
+    <hr>
+
+
+    
+    <div class="section-title">📌 Diagnosis Summary</div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Condition</th>
+            <th>Symptoms Observed</th>
+        </tr>
+        <tr>
+            <td>{{ disease.name }}</td>
+            <td>{{ disease.symptoms|default:"Not Provided" }}</td>
+        </tr>
+    </table>
+
+    
+    <div class="section-title">🔬 Medical Analysis</div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Cause</th>
+            <th>Risk Factors</th>
+        </tr>
+        <tr>
+            <td>{{ disease.causes|default:"Unknown" }}</td>
+            <td>
+                <strong>Eating Preference:</strong> {{ answers.eat_preference|default:"Not Provided" }}<br>
+                <strong>Duration of Symptoms:</strong> {{ answers.symptom_duration|default:"Not Provided" }} days<br>
+                <strong>Medication Taken:</strong> {{ answers.medication_taken|default:"None" }}<br>
+                <strong>Lifestyle Habits:</strong> {{ answers.lifestyle_habits|default:"Not Provided" }}
+            </td>
+        </tr>
+    </table>
+
+    
+    <div class="section-title">💊 Recommended Treatment Plan</div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Treatment Type</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td>Allopathic Treatment</td>
+            <td>Suggested Medications (if applicable)</td>
+        </tr>
+        {% if disease.ayurvedic_cure %}
+        <tr>
+            <td>🌿 Ayurvedic Remedies</td>
+            <td>{{ disease.ayurvedic_cure }}</td>
+        </tr>
+        {% endif %}
+        {% if disease.siddha_remedies %}
+        <tr>
+            <td>⚕️ Siddha Remedies</td>
+            <td>{{ disease.siddha_remedies }}</td>
+        </tr>
+        {% endif %}
+        {% if disease.acupressure_points %}
+        <tr>
+            <td>🎯 Acupressure Therapy</td>
+            <td>{{ disease.acupressure_points }}</td>
+        </tr>
+        {% endif %}
+        {% if disease.yoga %}
+        <tr>
+            <td>🧘 Yoga & Meditation</td>
+            <td>{{ disease.yoga }}</td>
+        </tr>
+        {% endif %}
+        {% if disease.lifestyle_diet %}
+        <tr>
+            <td>🥗 Lifestyle & Dietary Changes</td>
+            <td>{{ disease.lifestyle_diet }}</td>
+        </tr>
+        {% endif %}
+    </table>
+
+    
+    <div class="section-title">📢 Health Awareness Poster</div>
+    <p><strong>Title:</strong> 'Manage {{ disease.name }} Naturally & Effectively!'</p>
+    <ul>
+        <li>Prevention Tips</li>
+        <li>Diet Recommendations</li>
+        <li>Exercise & Stress Management</li>
+        <li>Importance of Medical Consultation</li>
+    </ul>
+
+   
+    <div class="section-title">📅 Follow-Up & Consultation</div>
+    <table class="table table-bordered">
+        <tr>
+            <th>Next Review Date</th>
+            <th>Doctor Assigned</th>
+            <th>Consultation Mode</th>
+        </tr>
+        <tr>
+            <td>{{ next_review_date }}</td>
+            <td>[Assign a relevant doctor]</td>
+            <td>Online Video Call</td>
+        </tr>
+    </table>
+
+   
+    <div class="alert alert-warning text-center">
+        ⚠ Note: This is a digitally generated health report based on user symptoms and recommended holistic treatment methods. 
+        Consult a medical professional for personalized care.
+    </div>
+
+    <div class="text-center">
+        <p><strong>📜 Report Generated By:</strong> AI-Driven Skin Disease Diagnosis and Holistic Treatment System</p>
+        <p><strong>📆 Date:</strong> {{ current_date }}</p>
+    </div>
+
+    <div class="text-center">
+        {% if llm_solution %}
+        <div class="section-title">🤖 AI-Generated Medical Solution</div>
+        <div class="alert alert-info">
+            <p>{{ llm_solution|linebreaks }}</p>
+        </div>
+        {% endif %}
+    </div>
+  
+</div>
+
+
+
+
+
+{% endblock main_content %}

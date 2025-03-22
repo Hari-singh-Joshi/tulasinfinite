@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+<link href="{% static 'assets/css/custom.css' %}" rel="stylesheet">
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 signup-card">
+        <h2 class="text-center mb-4">Create Your Account</h2>
+        <form method="post" class="animate__animated animate__fadeIn">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group mb-3">
+                <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+
+        {% if messages %}
+            <div class="mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="text-center">
+            <a class="signup-link" href="{% url 'login' %}">Already have an account? Login</a>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .signup-card {
+        max-width: 400px;
+        width: 100%;
+        border-radius: 10px;
+        background: #fff;
+        transition: transform 0.3s;
+    }
+    .signup-card:hover {
+        transform: scale(1.02);
+    }
+    @media (max-width: 576px) {
+        .signup-card {
+            padding: 20px;
+        }
+    }
+</style>
+
+{% endblock main_content %}

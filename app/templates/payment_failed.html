@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% load static %}
+
+
+{% block main_content %}
+
+<div class="container text-center mt-5  min-vh-100 d-flex flex-column">
+    <br>
+    <h2>Payment Failed</h2>
+    <p>Something went wrong with your payment. Please try again.</p>
+    <a href="{% url 'pay' %}" class="btn btn-primary">Try Again</a>
+
+</div>
+
+{% endblock %}

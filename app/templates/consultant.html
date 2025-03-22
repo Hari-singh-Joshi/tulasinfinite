@@ -1,0 +1,47 @@
+
+
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+
+
+<div class="container mt-5" style=" padding: 60px">
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <h3 class="text-center text-primary">Consultant</h3>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" name="age" min="1" placeholder="Enter age" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="disease_duration" class="form-label">Disease Duration (Months)</label>
+                        <input type="number" class="form-control" id="disease_duration" name="disease_duration" min="0" placeholder="Enter duration" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="medical_history" class="form-label">Medical History</label>
+                        <textarea class="form-control" id="medical_history" name="medical_history" rows="4" placeholder="Enter medical history. If applicable, mention pregnancy (for women), old age, diabetes, blood pressure issues, or any ongoing medication." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Upload Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock main_content %}

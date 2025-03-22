@@ -1,0 +1,96 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<div class="main" id="main">
+    <br><br>
+    <br>
+    
+    <h1>Solution for <b>{{ disease_name }}</b></h1>
+
+  
+    <div class="download-content">
+        <p class="result"><strong>Scientific Name:</strong> {{ scientific_name }}</p>
+        <p class="result"><strong>Cause:</strong> {{ cause }}</p>
+        <p class="result"><strong>Medicinal Solution:
+            <div class="container">
+                <ul>
+                    {% for medicine in solution.medicine %}
+                    <li>{{ medicine }}</li>
+                    {% endfor %}
+                </ul></strong>
+            </div>
+        </p>
+        <p class="result"><strong>Dietary Remedies:</strong></p>
+        <div class="container">
+            <p><strong>What to Eat:
+                <ul>
+                    {% for item in solution.remedy.what_to_eat %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul></strong> 
+            </div>
+        </p>
+        <div class="container">
+            <p><strong>What Not to Eat:
+                <ul>
+                    {% for item in solution.remedy.what_not_to_eat %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul></strong>
+            </p>
+        </div>
+    </div>
+
+   
+    <button onclick="downloadPDF()" class="btn btn-warning m-4">Download Report</button>
+</div>
+
+<style>
+    .main {
+        background-image: url("{% static 'background1.png' %}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .result_main {
+        margin: 20px 70px;
+    }
+
+    h1 {
+        font-family: fangsong;
+        width: 100%;
+        padding: 10px;
+        background-color: aquamarine;
+    }
+
+    .result {
+        background: #d5d5d5;
+        font-size: larger;
+        padding: 10px 30px;
+        border-radius: 30px;
+        margin: 15px;
+    }
+    #download-image {
+        display: block;
+        margin-left: auto;
+        margin-right: 0;
+        width: 15%; /* Adjust the width of the image */
+        float: right; /* Float the image to the right */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+</style>
+
+<script>
+    function downloadPDF() {
+        const element = document.getElementById('main'); 
+        html2pdf()
+            .from(element)
+            .save('Solution Report.pdf');
+    }
+</script>
+
+{% endblock main_content %}

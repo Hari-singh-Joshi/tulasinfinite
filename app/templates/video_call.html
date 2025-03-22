@@ -1,0 +1,95 @@
+<video id="localVideo" autoplay playsinline></video>
+<video id="remoteVideo" autoplay playsinline></video>
+<button id="startCall">Start Call</button>
+
+<script>
+const roomName = "room123";  
+const socket = new WebSocket(`ws://${window.location.host}/ws/video/${roomName}/`);
+
+socket.onopen = () => console.log("WebSocket connected");
+socket.onerror = error => console.error("WebSocket error:", error);
+
+socket.onmessage = async (event) => {
+    let data = JSON.parse(event.data);
+    if (data.offer) {
+        await handleOffer(data.offer);
+    } else if (data.answer) {
+        await handleAnswer(data.answer);
+    } else if (data.candidate) {
+        await handleCandidate(data.candidate);
+    }
+};
+
+let localStream;
+let peerConnection = new RTCPeerConnection({
+    iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+});
+
+// Get local video/audio stream
+navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        document.getElementById('localVideo').srcObject = stream;
+        localStream = stream;
+    })
+    .catch(error => console.error("Error accessing media devices:", error));
+
+document.getElementById('startCall').addEventListener('click', async () => {
+    if (!localStream) {
+        console.error("Local stream not available.");
+        return;
+    }
+    
+    localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+    try {
+        let offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        sendMessage({ offer: offer });
+    } catch (error) {
+        console.error("Error creating offer:", error);
+    }
+});
+
+async function handleOffer(offer) {
+    try {
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        let answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+        sendMessage({ answer: answer });
+    } catch (error) {
+        console.error("Error handling offer:", error);
+    }
+}
+
+async function handleAnswer(answer) {
+    try {
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    } catch (error) {
+        console.error("Error handling answer:", error);
+    }
+}
+
+function handleCandidate(candidate) {
+    peerConnection.addIceCandidate(new RTCIceCandidate(candidate)).catch(error => {
+        console.error("Error adding ICE candidate:", error);
+    });
+}
+
+peerConnection.onicecandidate = event => {
+    if (event.candidate) {
+        sendMessage({ candidate: event.candidate });
+    }
+};
+
+peerConnection.ontrack = event => {
+    document.getElementById('remoteVideo').srcObject = event.streams[0];
+};
+
+function sendMessage(message) {
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(message));
+    } else {
+        console.error("WebSocket not open. Message not sent:", message);
+    }
+}
+</script>

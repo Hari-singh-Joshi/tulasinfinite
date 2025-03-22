@@ -1,0 +1,160 @@
+/* Background styling */
+body {
+    background-image: url("../img/bb.webp"); /* Ensure the correct path */
+    background-size: cover;
+    background-position: center;
+    font-family: 'Arial', sans-serif;
+    background-repeat: no-repeat;
+    overflow-y: hidden;
+}
+
+
+
+/* Heading */
+h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0056b3;
+}
+
+/* Form labels */
+.form-group label {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Input fields */
+.form-control {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* Submit button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+/* Signup link */
+.signup-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #0056b3;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+/* Alert messages */
+.alert {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Google Login Button */
+.google-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #757575;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 340px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 10px auto;
+}
+
+.google-login img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.google-login:hover {
+    background-color: #f1f1f1;
+    border-color: #bbb;
+}
+
+.container1 {
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+    padding: 30px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    max-width: 400px; /* Set max width for the form */
+    margin: 270px auto;  /* Center the form on the page */
+    border: 1px solid #ccc; /* Subtle border for form container */
+}
+
+h2 {
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center the heading */
+    color: #0056b3; /* Healthcare-inspired blue */
+}
+
+.form-group label {
+    color: #333; /* Darker text for readability */
+    font-weight: bold;
+}
+
+.form-control {
+    padding: 10px; /* Comfortable padding */
+    border: 1px solid #ddd; /* Soft border for inputs */
+    border-radius: 5px; /* Rounded inputs */
+}
+
+.btn {
+    width: 100%; /* Full-width button */
+    padding: 12px; /* Padding for the button */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for the button */
+    background-color: #28a745; /* Healthcare-themed green */
+    color: #fff; /* White text for contrast */
+    font-size: 16px; /* Slightly larger font size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+}
+
+.btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.signup-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #0056b3; /* Blue link color */
+    font-weight: bold;
+    text-decoration: none; /* Remove underline */
+}
+
+.signup-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.alert {
+    font-size: 14px; /* Smaller text for alerts */
+    padding: 10px; /* Comfortable padding */
+    border-radius: 5px; /* Rounded alert box */
+}

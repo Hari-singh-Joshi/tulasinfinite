@@ -1,0 +1,38 @@
+{% extends 'doctor_base.html' %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container mt-5">
+    <br>
+    <br>
+    <h2 class="text-center text-primary">Patient Details</h2>
+    <div class="card p-4 shadow-lg">
+        <h4>Name: {{ consultant.name.username }}</h4>
+        <p><strong>Age:</strong> {{ consultant.age }}</p>
+        <p><strong>Disease Duration (Months):</strong> {{ consultant.disease_duration }}</p>
+        <p><strong>Medical History:</strong> {{ consultant.medical_history }}</p>
+        <p>
+            <strong>Image:</strong><br>
+            {% if consultant.image %}
+                <img src="{{ consultant.image.url }}" alt="Consultant Image" class="img-fluid" width="200">
+            {% else %}
+                No Image
+            {% endif %}
+        </p>
+    </div>
+
+    <h3 class="mt-4 text-success">Doctor's Solution</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="solution" class="form-label">Solution</label>
+            <textarea class="form-control" id="solution" name="solution" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit Solution</button>
+    </form>
+
+    <a href="{% url 'doctor' %}" class="btn btn-primary mt-3">Back to List</a>
+</div>
+
+{% endblock main_content %}

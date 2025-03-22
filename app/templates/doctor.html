@@ -1,0 +1,41 @@
+{% extends 'doctor_base.html' %}
+{% load static %}
+
+{% block main_content %}
+<link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+<div class="container mt-5">
+    <br>
+    <h2 class="text-center text-primary">Patient List</h2>
+    <h1>Welcome, Dr. {{ user.username }}</h1>
+
+    <table class="table table-bordered table-striped mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consultant in consultants %}
+            <tr>
+                <td class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="{% url 'patient_detail' consultant.id %}" class="text-decoration-none">
+                            {{ consultant.name }}
+                        </a>
+                        <span class="text-muted ms-2">{{ consultant.created_at }}</span>
+                    </div>
+                
+                    <a href="{% url 'delete_consultant' consultant.id %}" 
+                       class="text-danger text-decoration-none fw-bold">
+                       🗑️ Delete
+                    </a>
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'logout' %}" class="btn btn-primary mt-3">Return Home</a>
+</div>
+
+{% endblock main_content %}

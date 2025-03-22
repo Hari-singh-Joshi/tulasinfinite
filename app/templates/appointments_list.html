@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+
+<div class="container mt-5">
+    <br>
+    <h2 class="text-center mb-4">My Appointments</h2>
+    
+    {% if appointments %}
+        <div class="list-group">
+            {% for appointment in appointments %}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Dr. {{ appointment.doctor.name }}</h5>
+                        <p class="mb-1">Date: {{ appointment.date }} | Time: {{ appointment.time_slot }}</p>
+                    </div>
+                    <span class="badge {% if appointment.visited %}bg-success{% else %}{% endif %}">
+                        {% if appointment.visited %}
+                            Visited
+                        {% else %}
+                            <a href="{% url 'video_call' room_name='room123' %}" class="btn btn-success">Join Call</a>
+                        {% endif %}
+                    </span>
+                    <span class="badge {% if appointment.visited %} bg-success {% else %} bg-warning {% endif %} p-2">
+                        {% if appointment.visited %} Visited {% else %}Upcoming {% endif %}
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">No appointments found.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'book_appointment' %}" class="btn btn-primary">Book Another Appointment</a>
+    </div>
+</div>
+
+{% endblock %}

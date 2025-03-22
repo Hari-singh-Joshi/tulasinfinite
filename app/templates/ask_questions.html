@@ -1,0 +1,88 @@
+
+
+
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+    }
+    form {
+        margin-top: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    textarea {
+        resize: vertical;
+    }
+    button {
+        width: 100%;
+        padding: 10px;
+        font-size: 1.2em;
+        color: white;
+        background-color: #3498db;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #2980b9;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <br>
+<h2>Tell us more about your condition</h2>
+<p>Please provide accurate details to help generate the best health report.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+                <small style="color: #777;">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit">Submit Answers</button>
+</form>
+</div>
+
+
+
+{% endblock main_content %}

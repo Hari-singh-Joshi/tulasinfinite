@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+<br>
+<link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+<div class="container mt-5">
+    <div class="text-center">
+        <br>
+        <h2 class="text-primary fw-bold">My Solutions</h2>
+    </div>
+
+    {% if solutions %}
+        <div class="table-responsive mt-4">
+            <table class="table table-hover table-bordered text-center align-middle shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Solution</th>
+                        <th>Date Submitted</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for solution in solutions %}
+                    <tr>
+                        <td class="fw-semibold">{{ solution.consultant.name.username }}</td>
+                        <td>{{ solution.solution_text }}</td>
+                        <td>{{ solution.created_at }}</td>
+                        <td>
+                            <a href="{% url 'delete_solution' solution.id %}" 
+                               onclick="return confirm('Are you sure you want to delete this solution?');" 
+                               class="btn btn-sm btn-danger">
+                                🗑️ Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-danger text-center mt-4" role="alert">
+            No solutions found for your account.
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'logout' %}" class="btn btn-primary px-4">Return Home</a>
+    </div>
+</div>
+{% endblock main_content %}

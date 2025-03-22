@@ -1,0 +1,55 @@
+{% extends "doctor_base.html" %}
+{% load static %}
+
+{% block main_content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">Doctor's Appointment Schedule</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.patient.username }}</td>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time_slot }}</td>
+                        <td>
+                            
+                            <span class="badge {% if appointment.visited %}bg-success{% else %}{% endif %}">
+                                {% if appointment.visited %}
+                                    Visited
+                                {% else %}
+                                    <a href="{% url 'video_call' room_name='room123' %}" class="btn btn-success">Join Call</a>
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <form action="{% url 'mark_visited' appointment.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn {% if appointment.visited %}btn-warning{% else %}btn-success{% endif %}">
+                                    {% if appointment.visited %}Mark Not Visited{% else %}Mark Visited{% endif %}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

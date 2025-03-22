@@ -1,0 +1,45 @@
+
+   
+
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+
+
+<style>
+    body {
+        background-color: #f4f7f6;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .form-container {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        text-align: center;
+    }
+    button {
+        width: 100%;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2 class="mb-3">Enter Disease Name</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+{% endblock main_content %}

@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main_content %}
+<br>
+
+<div class="maindiv" style="background: #f4f4f4; padding: 60px; min-height: 100vh;">
+    <div class="container text-center">
+        <div class="card mx-auto animated-card">
+            <img src="{% static 'assets/img/logo.jpeg' %}" class="card-img-top logo-img" alt="AiFieldMedic Community">
+            <div class="card-body">
+                <h4 class="card-title text-primary">Skin Cure Community</h4>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary mt-3 custom-btn">Create Community</button>
+                </form>
+            </div>
+        </div>
+
+        <h3 class="mt-5 text-success">Existing Communities</h3>
+        <ul class="list-group mt-4">
+            {% for community in communities %}
+                <li class="list-group-item d-flex justify-content-between align-items-center community-item">
+                    <strong>{{ community.name.username }}</strong>: {{ community.box }}
+                    <a href="{% url 'delete' community.id %}" class="btn btn-danger delete-btn">Delete</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center">No communities created yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<style>
+    .animated-card {
+        max-width: 600px;
+        border-radius: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+        background: white;
+        padding: 30px;
+    }
+
+    .animated-card:hover {
+        transform: scale(1.05);
+    }
+
+    .logo-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .custom-btn {
+        background: #28a745;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .custom-btn:hover {
+        background: #218838;
+    }
+
+    .community-item {
+        background: #d4edda;
+        border-radius: 10px;
+        transition: 0.3s;
+        margin: 10px 0;
+    }
+
+    .community-item:hover {
+        background: #c3e6cb;
+    }
+
+    .delete-btn {
+        transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+        background: #c82333;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .animated-card {
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock main_content %}

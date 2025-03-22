@@ -1,0 +1,21 @@
+    {% extends "index.html" %}
+    {% load static %}
+    
+    
+    {% block main_content %}
+    
+    <div class="container text-center mt-5  min-vh-100 d-flex flex-column">
+        <br>
+        <h2>Enter Payment Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label>Amount (INR):</label>
+            <input type="number" name="amount" value="100" readonly>
+            <button type="submit" class="btn btn-success">Proceed to Pay</button>
+        </form>
+    
+    </div>
+    
+    {% endblock %}
+
+
