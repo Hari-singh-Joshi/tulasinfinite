@@ -77,7 +77,7 @@ def predictimage(request):
     else:
         return JsonResponse({"error": "Invalid "}, status=400)
 @login_required
-def upload_page(request):
+def uploadpage(request):
     result = None
     form = DiseaseForm() 
 
@@ -102,7 +102,7 @@ from .models import Community, Consultant,Solution
 from .forms import CommunityForm 
 
 @login_required
-def CommunityView(request):
+def Community(request):
     if request.method == 'POST':
         form = CommunityForm(request.POST)
         if form.is_valid():
